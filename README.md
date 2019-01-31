@@ -28,6 +28,6 @@ sleep 5s
 # trololo
 ```
 
-## kafka streams
+### kafka streams
 
 [easy example already prepared here](https://kafka.apache.org/21/documentation/streams/quickstart#quickstart_streams_download)
