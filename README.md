@@ -1,5 +1,5 @@
 # kafka-getting-started
-Kafka getting started ....again
+Kafka getting started ... again... in fucking progress...
 
 __requirements unix bash/zsh and at least installed jdk 8__
 
@@ -31,3 +31,15 @@ sleep 5s
 ### kafka streams
 
 [easy example already prepared here](https://kafka.apache.org/21/documentation/streams/quickstart#quickstart_streams_download)
+
+## generate maven project
+
+```bash
+./mvnw archetype:generate -DarchetypeGroupId=org.apache.kafka \
+                          -DarchetypeArtifactId=streams-quickstart-java \
+                          -DarchetypeVersion=2.1.0 \
+                          -DgroupId=com.github.daggerok \
+                          -DartifactId=kafka-streams-examples \
+                          -Dversion=1.0.0-SNAPSHOT \
+                          -Dpackage=con.github.daggerok.kafka    
+```
