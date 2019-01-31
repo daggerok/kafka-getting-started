@@ -11,7 +11,7 @@ buildNumber.properties
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
 kafka_2.11-2.1.0
 .idea
-.iml
-.ipr
-.iws
-.log
+*.iml
+*.ipr
+*.iws
+.log*
