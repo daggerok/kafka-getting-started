@@ -1,5 +1,5 @@
 # kafka-getting-started
-Kafka getting started ... again... in fucking progress...
+4del: This is going to be removed...
 
 __requirements unix bash/zsh and at least installed jdk 8__
 
