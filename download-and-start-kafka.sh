@@ -8,7 +8,7 @@ if ! [[ -d "${KAFKA_HOME}" ]]; then
   mv -f ${KAFKA_NAME} /tmp/
 fi
 ${KAFKA_HOME}/bin/zookeeper-server-start.sh ${KAFKA_HOME}/config/zookeeper.properties &
-sleep 3s
+sleep 10s
 ${KAFKA_HOME}/bin/kafka-server-start.sh ${KAFKA_HOME}/config/server.properties &
 #export KAFKA_HOME="/tmp/kafka_2.12-2.1.0" ; ${KAFKA_HOME}/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic my-topic --from-beginning
 #  sleep 3s
