@@ -1,5 +1,5 @@
 # kafka-getting-started
-4del: This is going to be removed...
+This repo is going to be removed in a future...
 
 __requirements unix bash/zsh and at least installed jdk 8__
 
@@ -9,17 +9,11 @@ __requirements unix bash/zsh and at least installed jdk 8__
 
 ```bash
 # download and extract
-wget -qO- https://www-eu.apache.org/dist/kafka/2.1.0/kafka_2.11-2.1.0.tgz | tar xvz
-# run zookeper server
-cd kafka_2.11-2.1.0
-bin/zookeeper-server-start.sh config/zookeeper.properties &
-# run kafka server
-sleep 3s
-bin/kafka-server-start.sh config/server.properties &
+bash ./download-and-start-kafka.sh
 # create topic
-bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
+/tmp/kafka_2.12-2.1.0/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
 # listen messages
-bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning &
+/tmp/kafka_2.12-2.1.0/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning &
 # send messages
 echo 'ololo\ntrololo' | bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test
 sleep 5s
@@ -28,18 +22,54 @@ sleep 5s
 # trololo
 ```
 
-### kafka streams
+## kafka streams example
 
 [easy example already prepared here](https://kafka.apache.org/21/documentation/streams/quickstart#quickstart_streams_download)
 
-## generate maven project
+### generate maven project
 
 ```bash
+mvn -N io.takari:maven:wrapper -Dmaven=3.6.0
+
 ./mvnw archetype:generate -DarchetypeGroupId=org.apache.kafka \
                           -DarchetypeArtifactId=streams-quickstart-java \
                           -DarchetypeVersion=2.1.0 \
                           -DgroupId=com.github.daggerok \
-                          -DartifactId=kafka-streams-examples \
+                          -DartifactId=streams-quickstart-java \
                           -Dversion=1.0.0-SNAPSHOT \
-                          -Dpackage=con.github.daggerok.kafka    
+                          -Dpackage=com.github.daggerok.kafka \
+                          -B # non interactive
 ```
+
+### fix generated project issue
+
+_find line 47 of file ./streams-quickstart-java/src/main/java/com/github/daggerok/kafka/LineSplit.java_
+
+```java
+builder.stream("streams-plaintext-input")
+```
+
+_and update in to_
+
+```java
+builder.stream("streams-plaintext-input").mapValues(String::valueOf)
+```
+
+### build project 
+
+```bash
+./mvnw -f ./streams-quickstart-java/pom.xml clean package
+```
+
+### run examples
+
+```bash
+./mvnw -f ./streams-quickstart-java/pom.xml exec:java -Dexec.mainClass=com.github.daggerok.kafka.Pipe
+./mvnw -f ./streams-quickstart-java/pom.xml exec:java -Dexec.mainClass=com.github.daggerok.kafka.WordCount
+./mvnw -f ./streams-quickstart-java/pom.xml exec:java -Dexec.mainClass=com.github.daggerok.kafka.LineSplit
+```
+
+## read detailed about examples in these links:
+
+- [Kafka streams tutorial](https://kafka.apache.org/21/documentation/streams/tutorial)
+- [Play with streams application](https://kafka.apache.org/21/documentation/streams/quickstart)
